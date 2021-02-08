@@ -76,17 +76,3 @@ public class GoalScored : AGPEvent
 		this.blueTeamScored = blueTeamScored;
 	}
 }
-
-public class GameStarted : AGPEvent { }
-
-public class GameTimedOut : AGPEvent
-{
-	public readonly int blueScore, redScore;
-
-	public GameTimedOut(int blueScore, int redScore)
-	{
-		this.blueScore = blueScore;
-		this.redScore = redScore;
-	}
-
-}

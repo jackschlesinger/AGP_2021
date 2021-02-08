@@ -21,14 +21,31 @@ public class GameController : MonoBehaviour
     {
         Services.GameController = this;
         
-        var playerGameObject = Instantiate(Resources.Load<GameObject>("Player"));
-        Services.Players = new[] {new UserControlledPlayer(playerGameObject, 
-            new [] {KeyCode.W, KeyCode.S, KeyCode.A, KeyCode.D })};
+        Services.EventManager = new EventManager();
+        
+        Services.EventManager.Register<GoalScored>(OnGoalScored);
 
+        var playerGameObject = Instantiate(Resources.Load<GameObject>("Player"));
+        // Services.Players = new[] {new UserControlledPlayer(playerGameObject, new [] {KeyCode.W, KeyCode.S, KeyCode.A, KeyCode.D })};
+        Services.Players = new[] {new UserControlledPlayer(playerGameObject)};
+
+        /*
+        // The above is the same as doing this:
+        Services.Players = new UserControlledPlayer[1];
+        Services.Players[0] = new UserControlledPlayer(playerGameObject, new []{KeyCode.W, KeyCode.S, KeyCode.A, KeyCode.D  });
+        */
+        
         Services.AIManager = new AIController();
         Services.AIManager.Initialize();
         
         Services.Input = new InputManager();
+    }
+
+    public void OnGoalScored(AGPEvent e)
+    {
+        var goalScoredWasBlue = ((GoalScored) e).blueTeamScored;
+        
+        Debug.Log("Goal was blue: " + goalScoredWasBlue);
     }
 
     private void Update()
@@ -41,5 +58,19 @@ public class GameController : MonoBehaviour
     private void OnDestroy()
     {
         Services.AIManager.Destroy();
+    }
+
+    public class GameStarted : AGPEvent { }
+
+    public class GameTimedOut : AGPEvent
+    {
+        public readonly int blueScore, redScore;
+
+        public GameTimedOut(int blueScore, int redScore)
+        {
+            this.blueScore = blueScore;
+            this.redScore = redScore;
+        }
+
     }
 }

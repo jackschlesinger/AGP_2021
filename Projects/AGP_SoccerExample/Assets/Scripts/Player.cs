@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using BehaviorTree;
 using UnityEngine;
 using UnityEngine.Serialization;
 using Object = System.Object;
@@ -27,6 +26,7 @@ public abstract class Player
     private SpriteRenderer _spriteRenderer;
     private Rigidbody2D _rigidbody2D;
     private Vector3 _startingPosition;
+    public Vector3 position => _gameObject.transform.position;
 
     #endregion
     
@@ -125,16 +125,19 @@ public abstract class Player
 
 public class AIPlayer : Player
 {
+    private FiniteStateMachine<AIPlayer> _fsm;
+    
     #region Lifecycle Management
-
     public AIPlayer(GameObject gameObject) : base(gameObject)
     {
-        
+        _fsm = new FiniteStateMachine<AIPlayer>(this);
+        _fsm.TransitionTo<Offense>();
     }
 
     public override void Update()
     {
-        MoveInDirection(_GetDirectionFromBallPosition());
+        _fsm.Update();
+        // MoveInDirection(_GetDirectionFromBallPosition());
     }
 
     #endregion
@@ -144,6 +147,48 @@ public class AIPlayer : Player
     private Direction[] _GetDirectionFromBallPosition()
     {
         return GetDirections(Services.GameController.ball);
+    }
+
+    #endregion
+
+    #region States
+
+    private abstract class AIPlayerState : FiniteStateMachine<AIPlayer>.State { }
+
+    private class Offense : AIPlayerState
+    {
+        public override void OnEnter()
+        {
+            // change my expression to be angry
+            // pick a defender
+        }
+
+        public override void Update()
+        {
+            base.Update();
+            // try to foul that defender
+            
+            if (Services.GameController.ball.transform.position.x < 0 && Context.playerTeam ||
+                Services.GameController.ball.transform.position.x > 0 && !Context.playerTeam)
+            {
+                TransitionTo<Defense>();
+            }
+        }
+
+        public override void OnExit()
+        {
+            // get rid of angry face
+        }
+    }
+
+    private class Defense : AIPlayerState
+    {
+        
+    }
+
+    private class NearBall : AIPlayerState
+    {
+        
     }
 
     #endregion

@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class InputManager
 {
-    public List<KeyCode> KeysDown { get; private set; }
-    public List<KeyCode> KeysUp { get; private set; }
-    public List<KeyCode> KeysStay { get; private set; }
+    public List<KeyCode> KeysDown { get; private set; } = new List<KeyCode>();
+    public List<KeyCode> KeysUp { get; private set; } = new List<KeyCode>();
+    public List<KeyCode> KeysStay { get; private set; } = new List<KeyCode>();
 
     public bool mouseDown  { get; private set; }
     public bool mouseUp  { get; private set; }
@@ -63,9 +63,9 @@ public class InputManager
             MousePositionWorldUnits = new Vector2(mousePosition.x, mousePosition.y);
         }
         
-        KeysDown = new List<KeyCode>();
-        KeysUp = new List<KeyCode>();
-        KeysStay = new List<KeyCode>();
+        KeysDown.Clear();
+        KeysUp.Clear();
+        KeysStay.Clear();
         
         foreach(KeyCode keycode in Enum.GetValues(typeof(KeyCode)))
         {
