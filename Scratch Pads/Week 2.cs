@@ -28,4 +28,4 @@ void FunctionName(int x) {
 
 Action<int> FunctionName = (x) => { print(x); };
 
-Func<int, string> TakesInIntAndReturnsString;
+Func<int, string,  float, string> TakesInIntAndReturnsString;
