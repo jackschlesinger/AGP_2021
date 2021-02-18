@@ -35,6 +35,7 @@ public abstract class Player
     protected Player(GameObject gameObject)
     {
         _gameObject = gameObject;
+        _gameObject.transform.parent = Services.GameController.inGame.transform;
         _spriteRenderer = _gameObject.GetComponent<SpriteRenderer>();
         _rigidbody2D = _gameObject.GetComponent<Rigidbody2D>();
     }
@@ -137,7 +138,7 @@ public class AIPlayer : Player
     public override void Update()
     {
         _fsm.Update();
-        // MoveInDirection(_GetDirectionFromBallPosition());
+        MoveInDirection(_GetDirectionFromBallPosition());
     }
 
     #endregion

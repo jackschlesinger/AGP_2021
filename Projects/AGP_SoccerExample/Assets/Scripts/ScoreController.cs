@@ -4,42 +4,44 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class ScoreController : MonoBehaviour
+public class ScoreController
 {
-    public TextMeshPro _displayedScore;
     private int redScore, blueScore;
 
     public float timer = 0;
-    public const float TimeForGame = 10.0f;
+    public const float TimeForGame = 30.0f;
 
-    private void Start()
+    public ScoreController()
     {
         Services.EventManager.Register<GoalScored>(IncrementTeamScore);
         Services.EventManager.Register<GameStarted>(OnGameStart);
     }
 
-    private void OnDestroy()
+    public void Destroy()
     {
         Services.EventManager.Unregister<GoalScored>(IncrementTeamScore);
+        Services.EventManager.Unregister<GameStarted>(OnGameStart);
     }
 
-    private void Update()
+    public void Update()
     {
-
         timer += Time.deltaTime;
 
         if (timer >= TimeForGame)
         {
-            Services.EventManager.Fire(new GameTimedOut(blueScore, redScore));
+            Services.EventManager.Fire(new TimedOut(blueScore, redScore));
         }
 
-        Debug.Log(timer);
-        _displayedScore.text = "RED TEAM: " + redScore + "\t\t\t\tBLUE TEAM: " + blueScore;
+        Services.GameController.inGame.redScore.text = "Red: " + redScore;
+        Services.GameController.inGame.blueScore.text = "Blue: " + blueScore;
+        Services.GameController.inGame.timer.text = ((int) (TimeForGame - timer)).ToString();
     }
 
     private void OnGameStart(AGPEvent e)
     {
         timer = 0;
+        blueScore = 0;
+        redScore = 0;
     }
 
     private void IncrementTeamScore(AGPEvent e)
@@ -48,11 +50,11 @@ public class ScoreController : MonoBehaviour
         
         if (goalScoredEvent.blueTeamScored)
         {
-            redScore++;
+            blueScore++;
         }
         else
         {
-            blueScore++;
+            redScore++;
         }
             
     }

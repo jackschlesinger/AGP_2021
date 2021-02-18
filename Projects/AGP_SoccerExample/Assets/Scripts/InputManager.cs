@@ -8,6 +8,10 @@ public class InputManager
     public List<KeyCode> KeysUp { get; private set; } = new List<KeyCode>();
     public List<KeyCode> KeysStay { get; private set; } = new List<KeyCode>();
 
+    public bool KeyDownThisFrame => KeysDown.Count != 0;
+    public bool KeysStayThisFrame => KeysStay.Count != 0;
+    public bool KeysUpThisFrame => KeysUp.Count != 0;
+
     public bool mouseDown  { get; private set; }
     public bool mouseUp  { get; private set; }
     public bool mouseStay { get; private set; }

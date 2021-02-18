@@ -10,6 +10,6 @@ public class Ball : MonoBehaviour
         if (!other.CompareTag("Goal")) return;
         
         var gameObjectName = other.gameObject.name;
-        Services.EventManager.Fire(new GoalScored(gameObjectName == "Blue Goal"));
+        Services.EventManager.Fire(new GoalScored(gameObjectName == "Red Goal"));
     }
 }

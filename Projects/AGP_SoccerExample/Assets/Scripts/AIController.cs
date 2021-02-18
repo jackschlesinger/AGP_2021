@@ -13,6 +13,8 @@ public class AIController
     {
         _players = new List<Player>();
         _CreateAIPlayers();
+        
+        Services.EventManager.Register<GoalScored>(OnGoalScored);
     }
 
     public Player GetClosestAI(Ball ball)
@@ -45,6 +47,8 @@ public class AIController
 
     public void Destroy()
     {
+        Services.EventManager.Unregister<GoalScored>(OnGoalScored);
+        
         foreach (var player in _players)
         {
             player.Destroy();
@@ -72,5 +76,11 @@ public class AIController
             var playerGameObject = Object.Instantiate(Resources.Load<GameObject>("Player"));
             _players.Add(new AIPlayer(playerGameObject).SetTeam(false).SetPosition(Random.Range(0.0f, -8.0f), Random.Range(-4.0f, 4.0f), true));
         }
+    }
+
+    private void OnGoalScored(AGPEvent e)
+    {
+        foreach (var player in _players) 
+            player.SetToStartingPosition();
     }
 }
