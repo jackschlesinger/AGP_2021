@@ -22,7 +22,7 @@ public class Week4 : MonoBehaviour
 
     private int BytesToInt(byte a, byte b, byte c, byte d)
     {
-        return 0;
+        return 256;
     }
 
     private int PowerOfTwo(int power)
