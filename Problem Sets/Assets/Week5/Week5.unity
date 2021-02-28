@@ -157,20 +157,17 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Delegate Test
+  m_text: 'JSON Data
 
     <align=left>
 
-    <color="red">FAIL</color> Number
-    of digits works.
+    <color="red">FAIL</color> number above
+    score worked correctly.
 
-    <color="red">FAIL</color> Smallest prime number is correct.
+    <color="red">FAIL</color> get high score name worked
+    correctly.
 
-    <color="red">FAIL</color>
-    Changes when input is 3.
-
-    <color="red">FAIL</color> Doesn''t change back
-    when the input is 3 again.'
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 1d26e07fac901459abb6ca7b75c94567, type: 2}
   m_sharedMaterial: {fileID: 21021748947663650, guid: 1d26e07fac901459abb6ca7b75c94567,
@@ -240,12 +237,12 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 159642896}
-    characterCount: 164
+    characterCount: 96
     spriteCount: 0
-    spaceCount: 29
-    wordCount: 29
+    spaceCount: 16
+    wordCount: 15
     linkCount: 0
-    lineCount: 6
+    lineCount: 4
     pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
@@ -345,7 +342,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Week 4 Assignment
+  m_text: Week 5 Assignment
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 1d26e07fac901459abb6ca7b75c94567, type: 2}
   m_sharedMaterial: {fileID: 21021748947663650, guid: 1d26e07fac901459abb6ca7b75c94567,
@@ -650,20 +647,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Bytes to Int
+  m_text: 'CSV Parser
 
     <align=left>
-
-    <color="green">PASS</color> Correct
-    for (0, 0, 1, 0).
-
-    <color="red">FAIL</color> Correct for (0, 42, 1, 0).
-
-    <color="red">FAIL</color>
-    Correct for (1, 1, 1, 1).
-
-    <color="red">FAIL</color> Correct for (2, 1, 1,
-    1).
 
 '
   m_isRightToLeft: 0
@@ -735,12 +721,12 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 943144729}
-    characterCount: 139
+    characterCount: 12
     spriteCount: 0
-    spaceCount: 32
-    wordCount: 31
+    spaceCount: 3
+    wordCount: 2
     linkCount: 0
-    lineCount: 6
+    lineCount: 2
     pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
@@ -877,8 +863,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 2126408953}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eb9c3dc3edaf94e8b9fc71c809e64014, type: 3}
+  m_Script: {fileID: 11500000, guid: 5ceb8b7570a8f4668bcaaf1df2d8156d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bytesToIntTest: {fileID: 943144729}
-  delegateTest: {fileID: 159642896}
+  csvTest: {fileID: 943144729}
+  networkTest: {fileID: 159642896}
+  csvExample: {fileID: 4900000, guid: b339e11440c134e73b270c008866230a, type: 3}
+  jsonExample: {fileID: 4900000, guid: 64d57f006b7af42b3b7d8dfbe60c7c59, type: 3}
