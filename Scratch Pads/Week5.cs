@@ -109,11 +109,14 @@ BoardPiece[,] board = new BoardPiece[8,8];
 board[4, 5] = new EmptySpace();
 
 
+
+
+
+
 BoardPiece[][] board = new BoardPiece[8][];
 for (var i = 0; i < 8; i++) {
 	board[i] = new BoardPiece[8];
 }
-
 
 board[4][5];
 
