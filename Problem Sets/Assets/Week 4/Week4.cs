@@ -22,12 +22,26 @@ public class Week4 : MonoBehaviour
 
     private int BytesToInt(byte a, byte b, byte c, byte d)
     {
-        return 0;
+        return (a << 24) + (b << 16) + (c << 8) + d;
+        
+        return (PowerOfTwo(24) * a) + (PowerOfTwo(16) * b) + (PowerOfTwo(8) * c) + d;
     }
 
     private int PowerOfTwo(int power)
     {
-        return 0;
+        // return (int) Mathf.Pow(2, power);
+
+        // Will not return correct value for negative powers.
+        if (power <= 0) return 1;
+
+        var toReturn = 2;
+
+        for (var i = 1; i < power; i++)
+        {
+            toReturn *= 2;
+        }
+
+        return toReturn;
     }
 
     /*
@@ -42,27 +56,50 @@ public class Week4 : MonoBehaviour
      */
 
     delegate int MathFunction(int input);
+    
     private MathFunction currentFunction;
 
     public int SmallestPrimeFactor(int input)
     {
-        return 0;
+        if (input == 1) return input;
+
+        for (var i = 2; i < input; i++)
+        {
+            if (input % i == 0) return i;
+        }
+
+        return input;
     }
 
     public int NumberOfDigits(int input)
     {
-        return 0;
+        input = Mathf.Abs(input);
+
+        var digits = 1;
+        
+        while (true)
+        {
+            if (input < 10) return digits;
+
+            input /= 10;
+            digits++;
+        }
     }
 
     // Imagine this is your "Start()" function
     public void Initialize()
     {
-        
+        currentFunction = NumberOfDigits;
     }
 
     public int ChangingFunction(int input)
     {
-        return 0;
+        var toReturn = currentFunction(input);
+
+        if (toReturn == 3)
+            currentFunction = SmallestPrimeFactor;
+            
+        return toReturn;
     }
     
     
