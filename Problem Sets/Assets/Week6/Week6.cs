@@ -35,25 +35,101 @@ public class Week6 : MonoBehaviour
 
     public IEnumerator NumberAboveScore(string URL, int score)
     {
-        yield return 0;
+        var webRequest = UnityWebRequest.Get(URL);
+        yield return webRequest.SendWebRequest();
+
+        if (webRequest.isHttpError || webRequest.isNetworkError)
+        {
+            Debug.Log(webRequest.error);
+            yield return 0;
+        }
+        else
+        {
+            var data = webRequest.downloadHandler.text;
+            var parsed = JSON.Parse(data);
+
+            var toReturn = 0;
+
+            foreach (JSONNode item in parsed["highScores"])
+            {
+                if (item["score"] > score)
+                    toReturn++;
+            }
+
+            yield return toReturn;
+        }
     }
     
     public IEnumerator GetHighScoreName(string URL)
     {
+        var www = UnityWebRequest.Get(URL);
+        yield return www.SendWebRequest();
+
+        if (www.isHttpError || www.isNetworkError)
+        {
+            Debug.LogWarning("Error: " + www.error);
+            yield return 0;
+        }
+        else
+        {
+            var data = www.downloadHandler.text;
+            var parsed = JSON.Parse(data);
+            var toReturn = parsed["highScores"][0];
         
-        yield return "Name";
+            foreach (JSONNode item in parsed["highScores"])
+            {
+                if (item["score"] > toReturn["score"])
+                    toReturn = item;
+            }
+
+            yield return toReturn["player"].Value;
+        }
     }
     
     /*
      * The second problem set is making a function that can handle callbacks.  Imagine you're checking a master server
      * to see whether there's a game server available or not.  Make a coroutine that takes in a URL and two Actions.
-     * If it receives the string "available", it invokes the Action for success, if it's not available, it invokes the
+     * If it receives the string "available", it invokes the Action for success, otherwise, it invokes the
      * Action for failure.
      */
 
     public IEnumerator CheckServerAvailability(string URL, Action onSuccess, Action onFailure)
     {
-        yield return null;
+        var www = UnityWebRequest.Get(URL);
+        yield return www.SendWebRequest();
+
+        if (www.isHttpError || www.isNetworkError)
+        {
+            Debug.LogWarning("Error connecting to master server: " + www.error);
+            onFailure?.Invoke();
+        }
+        else
+        {
+            var response = www.downloadHandler.text;
+
+            // Ternary operator 
+            // (bool) ? [Value if true] : [Value if false]
+            /*
+            var toDebug = response.ToUpper() == "AVAILABLE" ? "Server is available." : "Server not available.";
+            Debug.Log(toDebug);
+
+            Action toDo = response.ToUpper() == "AVAILABLE" ? onSuccess : onFailure;
+            if (toDo != null) toDo();
+            */
+            
+            if (response.ToUpper() == "AVAILABLE")
+            {
+                // null check:
+                // if (onSuccess != null)
+                //    onSuccess.Invoke();
+                
+                onSuccess?.Invoke();
+            }
+            else
+            {
+                onFailure?.Invoke();
+            }
+        }
     }
     
     /*
@@ -65,14 +141,26 @@ public class Week6 : MonoBehaviour
 
     public Func<string, string> StringReverser()
     {
-        return s => "";
+        return (string s) =>
+        {
+            var toReturn = "";
+            for (var i = s.Length - 1; i >= 0; i--)
+            {
+                toReturn += s[i];
+            }
+
+            return toReturn;
+        };
     }
 
     public Action<TextMeshProUGUI> AddSuccess()
     {
-        return tmp => { };
+        return (TextMeshProUGUI tmp) =>
+        {
+            tmp.text += "<color=\"green\">SUCESS</color> does successfully add a line about successfully adding a line.";
+        };
     }
-    
+
     // =========================== DON'T EDIT BELOW THIS LINE =========================== //
 
     public TextMeshProUGUI networkTest, callbackTest, lambdaTest;
