@@ -13,16 +13,37 @@ ls (list current directory)
 
 # Return true if even, false if odd
 def isEven(input) :
-	return True
+	return input % 2 == 0
 
 
 # Return the product of the input and all positive integers below it.
 def factorial(input) :
-	return input
+	toReturn = input;
+
+	while input > 1 :
+		input -= 1
+		toReturn *= input
+
+	return toReturn
+
 
 # Given a list of numbers, return the difference between the largest and smallest.
 def widthOfList(input) :
-	return 0
+
+	input.sort()
+
+	return input[len(input) - 1] - input[0]
+
+	smallest = input[0]
+	largest = input[0]
+
+	for x in input :
+		if x < smallest :
+			smallest = x
+		if x > largest :
+			largest = x
+
+	return largest - smallest
 
 """
 
@@ -31,15 +52,38 @@ Write a function that takes in a number and determines whether it's the same ups
 6090609		True 
 6996		False 		(becomes 9669)
 806908		True
-
+1 2 3 4 5 7
 """
 def sameUpsideDown(input) :
-	return True
+	inputAsString = str(input)
+	validNumbers = ['0', '6', '8', '9']
+
+	for i in range(len(inputAsString)) :
+		if i > len(inputAsString) / 2 :
+			return True
+
+		if inputAsString[i] not in validNumbers :
+			return False
+
+		if inputAsString[i] is '0' or inputAsString[i] is '8' :
+			if not inputAsString[i] is inputAsString[len(inputAsString) - 1 - i] : 
+				return False
+		elif inputAsString[i] is '6' :
+			if not inputAsString[len(inputAsString) - 1 - i] is '9' :
+				return False
+		elif inputAsString[i] is '9' :
+			if not inputAsString[len(inputAsString) - 1 - i] is '6' :
+				return False
 
 
 # Read the provided list of words, write to "output.txt" all words of given length that start with that letter.
 def allWordsOfLength(length, startingLetter) :
-	return 0
+	with open('wordlist.txt') as wordlist :
+		with open('output.txt', 'w') as filehandle :
+			for line in wordlist.readlines() :
+				for word in line.split('\n') :
+					if word.isalpha() and len(word) == length and word[0] == startingLetter :
+						filehandle.write(word + '\n')
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
 # Don't edit below this line.
